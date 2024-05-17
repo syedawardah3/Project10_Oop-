@@ -1,49 +1,50 @@
 #! /usr/bin/env node
 import inquirer from "inquirer";
-class Client {
+import chalk from "chalk";
+class Student {
     name;
     constructor(n) {
         this.name = n;
     }
 }
 class Person {
-    clients = [];
-    addClient(obj) {
-        this.clients.push(obj);
+    students = [];
+    addStudent(obj) {
+        this.students.push(obj);
     }
 }
 const persons = new Person();
-const programmStrat = async (persons) => {
+const programStart = async (persons) => {
     do {
-        console.log("Welcome Guest");
+        console.log(chalk.yellowBright.bold.italic.underline("\t\t WELCOME TO WARDAH SHAH OBJECT ORIENTED PROGRAMME"));
         const ans = await inquirer.prompt({
             type: "list",
-            message: "Ap kiss say bat Karna Chahaingay...",
             name: "select",
-            choices: ["khud say:Self", "Client"],
+            message: chalk.redBright.bold("To Whom You Want To Talk...?"),
+            choices: ["Wardah Shah", "Student"]
         });
-        if (ans.select == "khud say:Self") {
-            console.log(`Hello M Talking with Myself`);
-            console.log(`Now I am Fine`);
+        if (ans.select == "Wardah Shah") {
+            console.log(chalk.blueBright.bold(`\t\tYou're talking to ${chalk.bold.yellowBright("Wardah Shah")}`));
+            console.log(chalk.cyanBright.bold("\t\tHope You're Doing Good!!"));
         }
-        if (ans.select == "Client") {
-            const ans = await inquirer.prompt({
+        if (ans.select == "Student") {
+            const answer = await inquirer.prompt({
                 type: "input",
-                message: "Ap ko kis Client say baat karni hay.",
-                name: "Client",
+                name: "student",
+                message: chalk.magentaBright.bold("Which student do you want to talk? ")
             });
-            const client = persons.clients.find(val => val.name == ans.Client);
-            if (!client) {
-                const name = new Client(ans.Client);
-                persons.addClient(name);
-                console.log(`Hello i am ${name.name}, Now I am Fine`);
-                console.log(persons.clients);
+            const student = persons.students.find((val) => val.name == answer.student);
+            if (!student) {
+                const name = new Student(answer.student);
+                persons.addStudent(name);
+                console.log(chalk.yellowBright.bold(`\t\tI am ${name.name}, and I am Fine!! `));
+                console.log(persons.students);
             }
-            if (client) {
-                console.log(`Hello i am ${client.name}, Now I am Fine...........`);
-                console.log(persons.clients);
+            if (student) {
+                console.log(chalk.yellowBright.bold(`Hello i am ${student.name} and iam Fine!!....`));
+                console.log(persons.students);
             }
         }
     } while (true);
 };
-programmStrat(persons);
+programStart(persons);
